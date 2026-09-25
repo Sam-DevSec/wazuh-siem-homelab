@@ -1,0 +1,14 @@
+# Secrets NEVER commit
+.env
+*.pem
+*.key
+wazuh_indexer_ssl_certs/
+
+# Data and logs
+*.log
+wazuh_logs/
+wazuh_queue/
+
+# System files
+.DS_Store
+Thumbs.db
