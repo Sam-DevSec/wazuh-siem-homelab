@@ -37,6 +37,52 @@ This project covers the deployment of a centralized **Wazuh SIEM system** in a c
 | Manager writable layer grew to 8.63 GB | Set up 4 dedicated persistent volume mounts |
 | `wazuh_queue` size swelled to 10.82 GB | Disabled the offline-incompatible Vulnerability Detector |
 
+## Deployment
+
+### Prerequisites
+
+- Ubuntu Server 26.04 LTS (or similar)
+- Docker & Docker Compose V2
+- Kernel parameter `vm.max_map_count=262144`
+- Minimum 50 GB disk space (LVM recommended)
+
+### Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/Sam-DevSec/wazuh-siem-homelab.git
+cd wazuh-siem-homelab/single-node
+
+# Set kernel parameter
+sudo sysctl -w vm.max_map_count=262144
+echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
+
+# Generate SSL certificates
+sudo docker compose -f generate-indexer-certs.yml run --rm generator
+
+# Start the stack
+sudo docker compose up -d
+
+Access
+Wazuh Dashboard: https://<server-ip>
+
+Default credentials: see .env file
+
+Agent Installation
+On the monitored host:
+
+curl -so wazuh-agent.deb https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.14.7-1_amd64.deb
+sudo WAZUH_MANAGER='<manager-ip>' dpkg -i ./wazuh-agent.deb
+sudo systemctl daemon-reload
+sudo systemctl enable --now wazuh-agent
+
+Configuration Notes
+Vulnerability Detector is disabled by design (air-gapped environment, no internet access for feeds).
+
+Extra volume mounts added to wazuh.manager to prevent writable layer growth.
+
+Custom localfile blocks in the agent config for PostgreSQL, auth, and syslog monitoring.
+
 ## Screenshots
 
 ### Wazuh Dashboard — Overview
