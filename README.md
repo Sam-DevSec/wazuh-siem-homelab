@@ -37,5 +37,22 @@ This project covers the deployment of a centralized **Wazuh SIEM system** in a c
 | Manager writable layer grew to 8.63 GB | Set up 4 dedicated persistent volume mounts |
 | `wazuh_queue` size swelled to 10.82 GB | Disabled the offline-incompatible Vulnerability Detector |
 
+## Screenshots
+
+### Wazuh Dashboard — Overview
+![Dashboard Overview](screenshots/dashboard-overview.png)
+
+*Centralized monitoring dashboard with agent summary and alert severity breakdown across the last 24 hours.*
+
+### MITRE ATT&CK Dashboard
+![MITRE ATT&CK Dashboard](screenshots/mitre-attack-dashboard.png)
+
+*Automatic classification of security events by MITRE ATT&CK tactics and techniques — Credential Access, Defense Evasion, Initial Access, Persistence, Privilege Escalation, and Lateral Movement.*
+
+### Alert Detail — Password Guessing Detection
+![Password Guessing Detail](screenshots/password-guessing-detail.png)
+
+*Detailed view of a single alert: PostgreSQL authentication failure mapped to MITRE T1110.001 (Password Guessing), with compliance checks for PCI DSS, HIPAA, NIST 800-53, GDPR, and TSC.*
+
 ## Author
 [Sam-Dev.Sec] — https://github.com/Sam-DevSec/wazuh-siem-homelab
